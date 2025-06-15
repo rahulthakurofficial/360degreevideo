@@ -9,13 +9,13 @@ const Video360Viewer = ({ videoUrl }) => {
   const panoramaRef = useRef(null);
 
   useEffect(() => {
-    // Initialize libraries if not available
+    
     if (!window.PANOLENS && typeof PANOLENS !== 'undefined') {
       window.PANOLENS = PANOLENS;
     }
 
     return () => {
-      // Cleanup
+      
       if (viewerRef.current) {
         viewerRef.current.dispose();
         viewerRef.current = null;
@@ -32,12 +32,12 @@ const Video360Viewer = ({ videoUrl }) => {
     setError(null);
 
     try {
-      // Verify libraries are loaded
+      
       if (!window.PANOLENS || !window.THREE) {
         throw new Error('Required libraries not loaded');
       }
 
-      // Create viewer if it doesn't exist
+     
       if (!viewerRef.current) {
         viewerRef.current = new window.PANOLENS.Viewer({
           container: containerRef.current,
@@ -49,7 +49,7 @@ const Video360Viewer = ({ videoUrl }) => {
         });
       }
 
-      // Create video panorama
+     
       panoramaRef.current = new window.PANOLENS.VideoPanorama(videoUrl, {
         autoplay: true,
         muted: true,
@@ -57,12 +57,12 @@ const Video360Viewer = ({ videoUrl }) => {
         crossOrigin: 'anonymous'
       });
 
-      // Add event listeners for errors
+  
       panoramaRef.current.addEventListener('error', (err) => {
         throw new Error(`Video error: ${err.message}`);
       });
 
-      // Add panorama to viewer
+     
       viewerRef.current.add(panoramaRef.current);
       setStarted(true);
 
